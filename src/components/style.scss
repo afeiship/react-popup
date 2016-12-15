@@ -1,0 +1,21 @@
+.react-popup{
+  font-family: "Helvetica neue", Verdana, Geneva, sans-serif;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  backface-visibility: hidden;
+  z-index: 3;
+  width: 100%;
+  color:#333;
+  background: #eee;
+  transition: transform 0.3s,-webkit-transform 0.3s;
+
+
+  &[data-visible=false]{
+    transform: translateY(100%);
+  }
+
+  &[data-visible=true]{
+    transform: translateY(0);
+  }
+}
