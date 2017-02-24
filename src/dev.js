@@ -1,5 +1,5 @@
 import './dev.scss';
-import {ReactPopupCtrl} from './main';
+import ReactPopup from './main';
 
 class Content extends React.Component{
   render(){
@@ -43,20 +43,21 @@ class Content2 extends React.Component{
 class App extends React.Component{
 
   componentDidMount(){
-    ReactPopupCtrl.createInstance({
-      direction:'top',
-      content:<Content2 />
-    });
   }
 
   _click1(){
-    ReactPopupCtrl.show();
+    // ReactPopupCtrl.show();
+    // console.log(this.refs.cont);
+    this.refs.rnp.show();
   }
 
   render(){
     return (
       <div className="hello-react-popup">
         <button onClick={this._click1.bind(this)}>Show Customized Popup</button>
+        <ReactPopup direction='bottom' ref='rnp'>
+            <Content  />
+        </ReactPopup>
     </div>
     );
   }

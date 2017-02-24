@@ -6,7 +6,6 @@ import appendToDocument from 'react-append-to-document';
 class ReactPopup extends React.Component{
   static propTypes = {
     cssClass:React.PropTypes.string,
-    content:React.PropTypes.element,
     direction:React.PropTypes.string
   };
 
@@ -21,7 +20,6 @@ class ReactPopup extends React.Component{
     this.state = {
       visible:props.visible,
       animating:false,
-      content:props.content,
       direction:props.direction
     };
   }
@@ -83,7 +81,7 @@ class ReactPopup extends React.Component{
         onTransitionEnd={this._onTransitionEnd.bind(this)}
         hidden={!this.state.visible && !this.state.animating}
         className={classNames('react-popup',this.props.cssClass)}>
-        {this.state.content}
+        {this.props.children}
       </div>
     );
   }
