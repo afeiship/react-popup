@@ -7,10 +7,12 @@ class ReactPopup extends React.Component{
   static propTypes = {
     cssClass:React.PropTypes.string,
     content:React.PropTypes.element,
+    direction:React.PropTypes.string
   };
 
   static defaultProps = {
-    visible:false
+    visible:false,
+    direction:'bottom',
   };
 
 
@@ -19,7 +21,8 @@ class ReactPopup extends React.Component{
     this.state = {
       visible:props.visible,
       animating:false,
-      content:props.content
+      content:props.content,
+      direction:props.direction
     };
   }
 
@@ -44,8 +47,9 @@ class ReactPopup extends React.Component{
     this.setState({
       animating:true
     });
-
-    setTimeout(function(){
+    //todo:optimize?
+    this._timer && clearTimeout(this._timer);
+    this._timer=setTimeout(function(){
       self.setState({
         visible:inValue
       });
@@ -74,6 +78,7 @@ class ReactPopup extends React.Component{
   render(){
     return (
       <div
+        data-direction={this.props.direction}
         data-visible={this.state.visible}
         onTransitionEnd={this._onTransitionEnd.bind(this)}
         hidden={!this.state.visible && !this.state.animating}

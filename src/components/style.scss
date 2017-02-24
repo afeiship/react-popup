@@ -2,7 +2,7 @@
   font-family: "Helvetica neue", Verdana, Geneva, sans-serif;
   position: fixed;
   left: 0;
-  bottom: 0;
+
   backface-visibility: hidden;
   z-index: 3;
   width: 100%;
@@ -11,11 +11,27 @@
   transition: transform 0.3s,-webkit-transform 0.3s;
 
 
-  &[data-visible=false]{
-    transform: translateY(100%);
+  //popup from top:
+  &[data-direction=top]{
+    top: 0;
+    &[data-visible=false]{
+      transform: translateY(-100%);
+    }
+
+    &[data-visible=true]{
+      transform: translateY(0);
+    }
   }
 
-  &[data-visible=true]{
-    transform: translateY(0);
+  //popup from button:
+  &[data-direction=bottom]{
+    bottom:0;
+    &[data-visible=false]{
+      transform: translateY(100%);
+    }
+
+    &[data-visible=true]{
+      transform: translateY(0);
+    }
   }
 }
