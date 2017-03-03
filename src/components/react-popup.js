@@ -6,12 +6,16 @@ import appendToDocument from 'react-append-to-document';
 class ReactPopup extends React.Component{
   static propTypes = {
     cssClass:React.PropTypes.string,
-    direction:React.PropTypes.string
+    direction:React.PropTypes.string,
+    backdropStyle:React.PropTypes.object
   };
 
   static defaultProps = {
     visible:false,
     direction:'bottom',
+    backdropStyle:{
+      opacity:0.6
+    }
   };
 
 
@@ -61,9 +65,7 @@ class ReactPopup extends React.Component{
       onClick:function(){
         self.hide();
       },
-      style:{
-        opacity:0.6
-      }
+      style:this.props.backdropStyle
     });
   }
 
