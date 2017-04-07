@@ -13,7 +13,6 @@ export default class extends ReactVisible{
   };
 
   static defaultProps = {
-    visible:false,
     direction:'bottom',
     backdropStyle:{
       opacity:0.6
@@ -48,14 +47,16 @@ export default class extends ReactVisible{
   }
 
   render(){
+    const {direction,children,className,backdropStyle,...props} = this.props;
     return (
       <div
-        data-direction={this.props.direction}
+        {...props}
         data-visible={this.state.visible}
-        onTransitionEnd={this._onTransitionEnd.bind(this)}
+        onTransitionEnd={this._onTransitionEnd}
         hidden={this.state.hidden}
-        className={classNames('react-popup',this.props.className)}>
-        {this.props.children}
+        data-direction={direction}
+        className={classNames('react-popup',className)}>
+        {children}
       </div>
     );
   }

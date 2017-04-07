@@ -58,6 +58,10 @@ class App extends React.Component{
     this.refs.rnp.show();
   }
 
+  _rp_click(){
+    console.log('rp click!');
+  }
+
   render(){
     return (
       <div className="hello-react-popup">
@@ -67,7 +71,7 @@ class App extends React.Component{
         <button onClick={this._click2.bind(this,'left')}>direction:-> : left </button>
         <button onClick={this._click2.bind(this,'right')}>direction:-> : right </button>
 
-        <ReactPopup direction={this.state.direction} ref='rnp'>
+        <ReactPopup onClick={this._rp_click} direction={this.state.direction} ref='rnp'>
             <Content2  />
         </ReactPopup>
     </div>
