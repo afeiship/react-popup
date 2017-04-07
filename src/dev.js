@@ -55,7 +55,9 @@ class App extends React.Component{
   _click1(){
     // ReactPopupCtrl.show();
     // console.log(this.refs.cont);
-    this.refs.rnp.show();
+    this.refs.rnp.show(()=>{
+      console.log('after show..')
+    });
   }
 
   _rp_click(){
