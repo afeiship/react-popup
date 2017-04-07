@@ -41,9 +41,16 @@ class Content2 extends React.Component{
 }
 
 class App extends React.Component{
+  state = {
+    direction:'top'
+  };
 
   componentDidMount(){
   }
+
+  _click2 = (direction,e) =>{
+    this.setState({direction})
+  };
 
   _click1(){
     // ReactPopupCtrl.show();
@@ -54,9 +61,14 @@ class App extends React.Component{
   render(){
     return (
       <div className="hello-react-popup">
-        <button onClick={this._click1.bind(this)}>Show Customized Popup</button>
-        <ReactPopup direction='bottom' ref='rnp'>
-            <Content  />
+        <button style={{backgroundColor:'#f60'}} onClick={this._click1.bind(this)}>【 Show Customized Popup 】</button>
+        <button onClick={this._click2.bind(this,'top')}>direction:-> : top </button>
+        <button onClick={this._click2.bind(this,'bottom')}>direction:-> : bottom </button>
+        <button onClick={this._click2.bind(this,'left')}>direction:-> : left </button>
+        <button onClick={this._click2.bind(this,'right')}>direction:-> : right </button>
+
+        <ReactPopup direction={this.state.direction} ref='rnp'>
+            <Content2  />
         </ReactPopup>
     </div>
     );

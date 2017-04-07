@@ -77,9 +77,11 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "noop": "github:afeiship/noop",
     "react": "^15.4.1",
     "react-append-to-document": "github:afeiship/react-append-to-document",
     "react-backdrop": "github:afeiship/react-backdrop",
-    "react-dom": "^15.4.1"
+    "react-dom": "^15.4.1",
+    "react-visible": "github:afeiship/react-visible"
   }
 }

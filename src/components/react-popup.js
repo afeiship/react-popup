@@ -1,13 +1,15 @@
 import './style.scss';
+import {PropTypes} from 'react';
 import classNames from 'classnames';
 import {ReactBackdropCtrl} from 'react-backdrop';
-import appendToDocument from 'react-append-to-document';
+import ReactVisible from 'react-visible';
+import noop from 'noop';
 
-class ReactPopup extends React.Component{
+export default class extends ReactVisible{
   static propTypes = {
-    cssClass:React.PropTypes.string,
-    direction:React.PropTypes.string,
-    backdropStyle:React.PropTypes.object
+    className:PropTypes.string,
+    direction:PropTypes.string,
+    backdropStyle:PropTypes.object
   };
 
   static defaultProps = {
@@ -18,60 +20,30 @@ class ReactPopup extends React.Component{
     }
   };
 
-
   constructor(props){
     super(props);
     this.state = {
-      visible:props.visible,
-      animating:false,
+      hidden:!props.visible,
       direction:props.direction
     };
   }
 
-  static newInstance(inProps){
-    return appendToDocument(ReactPopup,inProps,{
-      className:'react-popup-wrapper'
-    });
-  }
-
-  show(inOptions){
-    this._setVisible(inOptions,true);
+  show(inCallback){
     ReactBackdropCtrl.show();
+    super.show(inCallback || noop);
   }
 
-  hide(){
-    this._setVisible({},false);
+  hide(inCallback){
     ReactBackdropCtrl.hide();
+    super.hide(inCallback || noop);
   }
-
-  _setVisible(inOptions,inValue){
-    var self=this;
-    this.setState({
-      animating:true
-    });
-    //todo:optimize?
-    this._timer && clearTimeout(this._timer);
-    this._timer=setTimeout(function(){
-      self.setState({
-        visible:inValue
-      });
-    });
-  }
-
 
   componentWillMount(){
-    var self = this;
     ReactBackdropCtrl.createInstance({
-      onClick:function(){
-        self.hide();
+      onClick:()=>{
+        this.hide();
       },
       style:this.props.backdropStyle
-    });
-  }
-
-  _onTransitionEnd(){
-    this.setState({
-      animating:false
     });
   }
 
@@ -81,13 +53,10 @@ class ReactPopup extends React.Component{
         data-direction={this.props.direction}
         data-visible={this.state.visible}
         onTransitionEnd={this._onTransitionEnd.bind(this)}
-        hidden={!this.state.visible && !this.state.animating}
-        className={classNames('react-popup',this.props.cssClass)}>
+        hidden={this.state.hidden}
+        className={classNames('react-popup',this.props.className)}>
         {this.props.children}
       </div>
     );
   }
 }
-
-
-export default ReactPopup;

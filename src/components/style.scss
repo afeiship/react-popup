@@ -1,5 +1,4 @@
 .react-popup{
-  font-family: "Helvetica neue", Verdana, Geneva, sans-serif;
   position: fixed;
   left: 0;
 
@@ -23,7 +22,7 @@
     }
   }
 
-  //popup from button:
+  //popup from bottom:
   &[data-direction=bottom]{
     bottom:0;
     &[data-visible=false]{
@@ -34,4 +33,31 @@
       transform: translateY(0);
     }
   }
+
+
+  //popup from left:
+  &[data-direction=left]{
+    top: 0;
+    &[data-visible=false]{
+      transform: translateX(-100%);
+    }
+
+    &[data-visible=true]{
+      transform: translateX(0);
+    }
+  }
+
+
+  //popup from right:
+  &[data-direction=right]{
+    top: 0;
+    &[data-visible=false]{
+      transform: translateX(100%);
+    }
+
+    &[data-visible=true]{
+      transform: translateX(0);
+    }
+  }
+
 }
