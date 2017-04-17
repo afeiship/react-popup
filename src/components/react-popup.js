@@ -20,7 +20,6 @@ export default class extends ReactBackdrop{
       direction:props.direction,
       visible:false,
       hidden:true,
-      animating:false
     };
   }
 

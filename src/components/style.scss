@@ -3,15 +3,11 @@
   left: 0;
 
   backface-visibility: hidden;
-  z-index: 101;
+  z-index: 3;
   width: 100%;
   color:#333;
   background: #eee;
   transition: transform 0.3s,-webkit-transform 0.3s;
-
-  .react-backdrop{
-    z-index:100;
-  }
 
   //popup from top:
   &[data-direction=top]{
