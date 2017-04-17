@@ -1,62 +1,43 @@
 import './style.scss';
 import {PropTypes} from 'react';
 import classNames from 'classnames';
-import {ReactBackdropCtrl} from 'react-backdrop';
-import ReactVisible from 'react-visible';
+import {ReactBackdrop} from 'react-backdrop';
 import noop from 'noop';
 
-export default class extends ReactVisible{
+export default class extends ReactBackdrop{
   static propTypes = {
     className:PropTypes.string,
-    direction:PropTypes.string,
-    backdropStyle:PropTypes.object
+    direction:PropTypes.string
   };
 
   static defaultProps = {
-    direction:'bottom',
-    backdropStyle:{
-      opacity:0.6
-    }
+    direction:'bottom'
   };
 
   constructor(props){
     super(props);
     this.state = {
-      hidden:!props.visible,
-      direction:props.direction
+      direction:props.direction,
+      visible:false,
+      hidden:true,
+      animating:false
     };
   }
 
-  show(inCallback){
-    ReactBackdropCtrl.show();
-    super.show(inCallback || noop);
-  }
-
-  hide(inCallback){
-    ReactBackdropCtrl.hide();
-    super.hide(inCallback || noop);
-  }
-
-  componentWillMount(){
-    ReactBackdropCtrl.createInstance({
-      onClick:()=>{
-        this.hide();
-      },
-      style:this.props.backdropStyle
-    });
-  }
-
   render(){
-    const {direction,children,className,backdropStyle,...props} = this.props;
+    const {direction,children,className,visible,...props} = this.props;
     return (
-      <div
-        {...props}
-        data-visible={this.state.visible}
-        onTransitionEnd={this._onTransitionEnd}
-        hidden={this.state.hidden}
-        data-direction={direction}
-        className={classNames('react-popup',className)}>
-        {children}
+      <div className="react-popup-container">
+        <div
+          {...props}
+          data-visible={this.state.visible}
+          onTransitionEnd={this._onTransitionEnd}
+          hidden={this.state.hidden}
+          data-direction={direction}
+          className={classNames('react-popup',className)}>
+          {children}
+        </div>
+        <ReactBackdrop onClick={()=>{this.hide()}} visible={this.state.visible} />
       </div>
     );
   }

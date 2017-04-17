@@ -1,7 +1,11 @@
 *{margin: 0;padding:0;}
 ul,li{list-style: none;}
+html,body,#app,{
+  height:100%;
+}
 
 .hello-react-popup{
+  height:100%;
   color:#F00;
   padding:100px 20px;
   position: relative;
