@@ -36,7 +36,7 @@ export default class extends ReactBackdrop{
           className={classNames('react-popup',className)}>
           {children}
         </div>
-        <ReactBackdrop onClick={()=>{this.hide()}} visible={this.state.visible} />
+        <ReactBackdrop style={{position:'fixed'}} onClick={()=>{this.hide()}} visible={this.state.visible} />
       </div>
     );
   }
