@@ -2,7 +2,7 @@
 > Popup component for react.
 
 ## size:
-+ 12K	react-popup.js
++ 16K	react-popup.js
 + 52K	react-popup.js.map
 
 
