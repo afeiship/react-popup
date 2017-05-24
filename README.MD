@@ -5,23 +5,22 @@
 + 12K	react-popup.js
 + 52K	react-popup.js.map
 
-## resource:
-+ http://www.cnblogs.com/Kummy/p/4966937.html
-+ https://github.com/steven5538/vue-button
-+ https://yarnpkg.com/en/docs/install
-
 
 ## properties:
 ```javascript
+
   static propTypes = {
     className:PropTypes.string,
     direction:PropTypes.string,
-    backdropStyle:PropTypes.object
+    closeable:PropTypes.bool,
   };
+
+  static defaultProps = {
+    direction:'bottom',
+    closeable:false
+  };
+  
 ```
-
-
-
 
 ## usage:
 ```jsx
@@ -79,7 +78,13 @@ class App extends React.Component{
   _click1(){
     // ReactPopupCtrl.show();
     // console.log(this.refs.cont);
-    this.refs.rnp.show();
+    this.refs.rnp.show(()=>{
+      console.log('after show..')
+    });
+  }
+
+  _rp_click(){
+    console.log('rp click!');
   }
 
   render(){
@@ -91,7 +96,7 @@ class App extends React.Component{
         <button onClick={this._click2.bind(this,'left')}>direction:-> : left </button>
         <button onClick={this._click2.bind(this,'right')}>direction:-> : right </button>
 
-        <ReactPopup direction={this.state.direction} ref='rnp'>
+        <ReactPopup onClick={this._rp_click} direction={this.state.direction} ref='rnp'>
             <Content2  />
         </ReactPopup>
     </div>
@@ -102,5 +107,8 @@ class App extends React.Component{
 
 ```
 
-## todos:
-[ ] Add callback for show method.
+
+
+## resource:
++ http://ionicframework.com/docs/components/#full-buttons
+

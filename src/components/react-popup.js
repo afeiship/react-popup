@@ -1,18 +1,24 @@
 import './style.scss';
+
 import {PropTypes} from 'react';
-import classNames from 'classnames';
 import {ReactBackdrop} from 'react-backdrop';
+import classNames from 'classnames';
+import closeImg from './close.png';
 import noop from 'noop';
 
 export default class extends ReactBackdrop{
+  /*===properties start===*/
   static propTypes = {
     className:PropTypes.string,
-    direction:PropTypes.string
+    direction:PropTypes.string,
+    closeable:PropTypes.bool,
   };
 
   static defaultProps = {
-    direction:'bottom'
+    direction:'bottom',
+    closeable:false
   };
+  /*===properties end===*/
 
   constructor(props){
     super(props);
@@ -23,8 +29,21 @@ export default class extends ReactBackdrop{
     };
   }
 
+  get children(){
+    const {direction,children,closeable} = this.props;
+    let childList = [
+      closeable && <button key="btn" onClick={this._onClose} className="close"><img width="40" src={closeImg} /></button>,
+      children
+    ];
+    return direction==='bottom' ? childList : childList.reverse();
+  }
+
+  _onClose =() =>{
+    this.hide();
+  };
+
   render(){
-    const {direction,children,className,visible,...props} = this.props;
+    const {direction,children,className,visible,closeable,...props} = this.props;
     return (
       <div className="react-popup-container">
         <div
@@ -34,7 +53,7 @@ export default class extends ReactBackdrop{
           hidden={this.state.hidden}
           data-direction={direction}
           className={classNames('react-popup',className)}>
-          {children}
+          {this.children}
         </div>
         <ReactBackdrop style={{position:'fixed'}} onClick={()=>{this.hide()}} visible={this.state.visible} />
       </div>

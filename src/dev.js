@@ -1,6 +1,8 @@
 import './dev.scss';
+
 import ReactPopup from './main';
 
+/*===example start===*/
 class Content extends React.Component{
   render(){
     return (
@@ -81,6 +83,7 @@ class App extends React.Component{
   }
 }
 
+/*===example end===*/
 
 ReactDOM.render(
     <App />,

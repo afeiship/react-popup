@@ -10,7 +10,6 @@ html,body,#app,{
   padding:100px 20px;
   position: relative;
   button{
-    background: #3cc51f;
     width:100%;
     display: block;
     margin-bottom: 10px;
@@ -20,7 +19,7 @@ html,body,#app,{
     border: none;
 
     &:active{
-      background: darken(#3cc51f,10%);
+      // background: darken(#3cc51f,10%);
     }
 
     &:focus{
@@ -34,6 +33,7 @@ html,body,#app,{
 
 .react-popup{
   .content{
+    background: #fff;
     h1{
       border-left: 5px solid #CCC;
       padding-left: 10px;
