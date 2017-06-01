@@ -12,11 +12,13 @@ export default class extends ReactBackdrop{
     className:PropTypes.string,
     direction:PropTypes.string,
     closeable:PropTypes.bool,
+    fullscreen:PropTypes.bool,
   };
 
   static defaultProps = {
     direction:'bottom',
-    closeable:false
+    closeable:false,
+    fullscreen:false
   };
   /*===properties end===*/
 
@@ -43,7 +45,7 @@ export default class extends ReactBackdrop{
   };
 
   render(){
-    const {direction,children,className,visible,closeable,...props} = this.props;
+    const {direction,children,className,visible,closeable,fullscreen,...props} = this.props;
     return (
       <div className="react-popup-container">
         <div
@@ -52,6 +54,7 @@ export default class extends ReactBackdrop{
           onTransitionEnd={this._onTransitionEnd}
           hidden={this.state.hidden}
           data-direction={direction}
+          data-fullscreen={fullscreen}
           className={classNames('react-popup',className)}>
           {this.children}
         </div>

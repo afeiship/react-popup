@@ -15,6 +15,11 @@
     padding:14px;
   }
 
+  //fullscreen:
+  &[data-fullscreen=true]{
+    height:100%;
+  }
+
   //popup from top:
   &[data-direction=top]{
     top: 0;
