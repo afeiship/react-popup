@@ -13,11 +13,13 @@
     className:PropTypes.string,
     direction:PropTypes.string,
     closeable:PropTypes.bool,
+    fullscreen:PropTypes.bool,
   };
 
   static defaultProps = {
     direction:'bottom',
-    closeable:false
+    closeable:false,
+    fullscreen:false
   };
   
 ```
@@ -83,6 +85,11 @@ class App extends React.Component{
     });
   }
 
+  _click3(){
+    console.log('fullscreen')
+    this.refs.rnp2.show();
+  }
+
   _rp_click(){
     console.log('rp click!');
   }
@@ -91,13 +98,21 @@ class App extends React.Component{
     return (
       <div className="hello-react-popup">
         <button style={{backgroundColor:'#f60'}} onClick={this._click1.bind(this)}>【 Show Customized Popup 】</button>
-        <button onClick={this._click2.bind(this,'top')}>direction:-> : top </button>
-        <button onClick={this._click2.bind(this,'bottom')}>direction:-> : bottom </button>
-        <button onClick={this._click2.bind(this,'left')}>direction:-> : left </button>
-        <button onClick={this._click2.bind(this,'right')}>direction:-> : right </button>
+        <button style={{backgroundColor:'#f60'}}  onClick={this._click2.bind(this,'top')}>direction:-> : top </button>
+        <button style={{backgroundColor:'#f60'}}  onClick={this._click2.bind(this,'bottom')}>direction:-> : bottom </button>
+        <button style={{backgroundColor:'#f60'}}  onClick={this._click2.bind(this,'left')}>direction:-> : left </button>
+        <button style={{backgroundColor:'#f60'}}  onClick={this._click2.bind(this,'right')}>direction:-> : right </button>
+        <button style={{backgroundColor:'#4cd964'}}  onClick={this._click3.bind(this)}>FullScreen</button>
 
         <ReactPopup onClick={this._rp_click} direction={this.state.direction} ref='rnp'>
             <Content2  />
+        </ReactPopup>
+
+        <ReactPopup className="my-full-popup" onClick={this._rp_click} fullscreen direction='bottom' ref='rnp2'>
+            I am a fullscrenn..
+            <button  style={{backgroundColor:'#4cd964',width:'80%',margin:'200px auto 0'}} onClick={()=>{
+              this.refs.rnp2.hide();
+            }}>Close ME</button>
         </ReactPopup>
     </div>
     );
