@@ -14,12 +14,16 @@
     direction:PropTypes.string,
     closeable:PropTypes.bool,
     fullscreen:PropTypes.bool,
+    onCloseClick:PropTypes.func,
+    onDropClick:PropTypes.func,
   };
 
   static defaultProps = {
     direction:'bottom',
     closeable:false,
-    fullscreen:false
+    fullscreen:false,
+    onDropClick: noop,
+    onCloseClick: noop,
   };
   
 ```
@@ -94,6 +98,10 @@ class App extends React.Component{
     console.log('rp click!');
   }
 
+  _dropclick = (e) =>{
+    console.log(e,1);
+  };
+
   render(){
     return (
       <div className="hello-react-popup">
@@ -104,7 +112,7 @@ class App extends React.Component{
         <button style={{backgroundColor:'#f60'}}  onClick={this._click2.bind(this,'right')}>direction:-> : right </button>
         <button style={{backgroundColor:'#4cd964'}}  onClick={this._click3.bind(this)}>FullScreen</button>
 
-        <ReactPopup onClick={this._rp_click} direction={this.state.direction} ref='rnp'>
+        <ReactPopup onDropClick={this._dropclick} onClick={this._rp_click} direction={this.state.direction} ref='rnp'>
             <Content2  />
         </ReactPopup>
 
@@ -122,7 +130,9 @@ class App extends React.Component{
 
 ```
 
-
+## todos:
++ [ ] remove Closeable property.
++ [ ] optimize onDropClick to Promise.then model
 
 ## resource:
 + http://ionicframework.com/docs/components/#full-buttons

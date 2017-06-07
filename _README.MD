@@ -16,7 +16,9 @@ BACKUP_PROPERTIES
 BACKUP_USAGE
 ```
 
-
+## todos:
++ [ ] remove Closeable property.
++ [ ] optimize onDropClick to Promise.then model
 
 ## resource:
 + http://ionicframework.com/docs/components/#full-buttons
