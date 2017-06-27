@@ -19,6 +19,8 @@ BACKUP_USAGE
 ## todos:
 + [ ] remove Closeable property.
 + [ ] optimize onDropClick to Promise.then model
++ [ ] onShow/onHide event (react-visible).
+
 
 ## resource:
 + http://ionicframework.com/docs/components/#full-buttons
