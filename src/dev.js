@@ -72,7 +72,7 @@ class App extends React.Component{
   }
 
   _dropclick = (e) =>{
-    console.log(e,1);
+    console.log('drop click.');
   };
 
   render(){

@@ -46,12 +46,16 @@ export default class extends ReactBackdrop{
 
   _onClose = (inEvent) => {
     const {onCloseClick} = this.props;
-    this.hide(onCloseClick);
+    this.hide().then(()=>{
+      onCloseClick(inEvent);
+    });
   };
 
   _onDropClick = (inEvent) => {
     const {onDropClick} = this.props;
-    this.hide(onDropClick);
+    this.hide().then(()=>{
+      onDropClick(inEvent);
+    });
   };
 
   render(){
