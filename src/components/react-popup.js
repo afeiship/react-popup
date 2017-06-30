@@ -15,6 +15,7 @@ export default class extends ReactBackdrop{
     fullscreen:PropTypes.bool,
     onCloseClick:PropTypes.func,
     onDropClick:PropTypes.func,
+    backdropStyle:PropTypes.object
   };
 
   static defaultProps = {
@@ -23,6 +24,9 @@ export default class extends ReactBackdrop{
     fullscreen:false,
     onDropClick: noop,
     onCloseClick: noop,
+    backdropStyle:{
+      position:'fixed'
+    }
   };
   /*===properties end===*/
 
@@ -30,6 +34,7 @@ export default class extends ReactBackdrop{
     super(props);
     this.state = {
       direction:props.direction,
+      backdropStyle: props.backdropStyle,
       visible:false,
       hidden:true,
     };
@@ -59,7 +64,7 @@ export default class extends ReactBackdrop{
   };
 
   render(){
-    const {direction,children,className,visible,closeable,fullscreen,onCloseClick,onDropClick,...props} = this.props;
+    const {direction,children,className,visible,closeable,fullscreen,onCloseClick,onDropClick,backdropStyle,...props} = this.props;
     return (
       <div className="react-popup-container">
         <div
@@ -72,7 +77,7 @@ export default class extends ReactBackdrop{
           className={classNames('react-popup',className)}>
           {this.children}
         </div>
-        <ReactBackdrop style={{position:'fixed'}} onClick={this._onDropClick} visible={this.state.visible} />
+        <ReactBackdrop style={backdropStyle} onClick={this._onDropClick} visible={this.state.visible} />
       </div>
     );
   }
