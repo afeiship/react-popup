@@ -55,12 +55,15 @@ export default class extends ReactBackdrop{
 
   show(){
     const { onShown } = this.props;
-    return new Promise((resolve,reject)=>{
-      super.show().then(()=>{
-        resolve();
-        onShown();
+    const { visible } = this.state;
+    if(!visible){
+      return new Promise((resolve,reject)=>{
+        super.show().then(()=>{
+          resolve();
+          onShown();
+        });
       });
-    });
+    }
   }
 
   hide(){
