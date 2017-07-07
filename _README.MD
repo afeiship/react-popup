@@ -17,9 +17,9 @@ BACKUP_USAGE
 ```
 
 ## todos:
-+ [ ] remove Closeable property.
-+ [ ] optimize onDropClick to Promise.then model
-+ [ ] onShow/onHide event (react-visible).
++ [x] remove Closeable property. (remain)
++ [x] optimize onDropClick to Promise.then model
++ [x] onShow/onHide event (react-visible).
 
 
 ## resource:

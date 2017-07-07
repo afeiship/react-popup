@@ -9,19 +9,23 @@ import noop from 'noop';
 export default class extends ReactBackdrop{
   /*===properties start===*/
   static propTypes = {
-    className:PropTypes.string,
-    direction:PropTypes.string,
-    closeable:PropTypes.bool,
-    fullscreen:PropTypes.bool,
-    onCloseClick:PropTypes.func,
-    onDropClick:PropTypes.func,
-    backdropStyle:PropTypes.object
+    className: PropTypes.string,
+    direction: PropTypes.string,
+    closeable: PropTypes.bool,
+    fullscreen: PropTypes.bool,
+    onShown: PropTypes.func,
+    onHidden: PropTypes.func,
+    onCloseClick: PropTypes.func,
+    onDropClick: PropTypes.func,
+    backdropStyle: PropTypes.object
   };
 
   static defaultProps = {
     direction:'bottom',
     closeable:false,
     fullscreen:false,
+    onShown: noop,
+    onHidden: noop,
     onDropClick: noop,
     onCloseClick: noop,
     backdropStyle:{
@@ -46,25 +50,51 @@ export default class extends ReactBackdrop{
       closeable && <button key="btn" onClick={this._onClose} className="close"><img width="40" src={closeImg} /></button>,
       children
     ];
-    return direction==='bottom' ? childList : childList.reverse();
+    return direction === 'bottom' ? childList : childList.reverse();
+  }
+
+  show(){
+    const { onShown } = this.props;
+    return new Promise((resolve,reject)=>{
+      super.show().then(()=>{
+        resolve();
+        onShown();
+      });
+    });
+  }
+
+  hide(){
+    const { onHidden } = this.props;
+    return new Promise((resolve,reject)=>{
+      super.hide().then(()=>{
+        resolve();
+        onHidden();
+      });
+    });
   }
 
   _onClose = (inEvent) => {
-    const {onCloseClick} = this.props;
-    this.hide().then(()=>{
+    const { onCloseClick } = this.props;
+    return this.hide().then(()=>{
       onCloseClick(inEvent);
     });
   };
 
   _onDropClick = (inEvent) => {
-    const {onDropClick} = this.props;
-    this.hide().then(()=>{
+    const { onDropClick } = this.props;
+    return this.hide().then(()=>{
       onDropClick(inEvent);
     });
   };
 
   render(){
-    const {direction,children,className,visible,closeable,fullscreen,onCloseClick,onDropClick,backdropStyle,...props} = this.props;
+    const {
+      direction,children,className,visible,
+      closeable,fullscreen,
+      onShown,onHidden,onCloseClick,onDropClick,
+      backdropStyle,...props
+    } = this.props;
+
     return (
       <div className="react-popup-container">
         <div

@@ -57,7 +57,7 @@ class App extends React.Component{
   _click1(){
     // ReactPopupCtrl.show();
     // console.log(this.refs.cont);
-    this.refs.rnp.show(()=>{
+    this.refs.rnp.show().then(()=>{
       console.log('after show..')
     });
   }
@@ -67,12 +67,21 @@ class App extends React.Component{
     this.refs.rnp2.show();
   }
 
-  _rp_click(){
+  _rp_click =e =>{
     console.log('rp click!');
+    this.refs.rnp2.hide();
   }
 
   _dropclick = (e) =>{
     console.log('drop click.');
+  };
+
+  _onShown = e =>{
+    console.log('on shown.');
+  };
+
+  _onHidden = e =>{
+    console.log('on hidden.');
   };
 
   render(){
@@ -85,7 +94,13 @@ class App extends React.Component{
         <button style={{backgroundColor:'#f60'}}  onClick={this._click2.bind(this,'right')}>direction:-> : right </button>
         <button style={{backgroundColor:'#4cd964'}}  onClick={this._click3.bind(this)}>FullScreen</button>
 
-        <ReactPopup onDropClick={this._dropclick} onClick={this._rp_click} direction={this.state.direction} ref='rnp'>
+        <ReactPopup
+          onShown={this._onShown}
+          onHidden={this._onHidden}
+          onDropClick={this._dropclick}
+          onClick={this._rp_click}
+          direction={this.state.direction}
+          ref='rnp'>
             <Content2  />
         </ReactPopup>
 
