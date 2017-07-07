@@ -92,7 +92,8 @@ export default class extends ReactBackdrop{
       direction,children,className,visible,
       closeable,fullscreen,
       onShown,onHidden,onCloseClick,onDropClick,
-      backdropStyle,...props
+      backdropStyle,
+      ...props
     } = this.props;
 
     return (
