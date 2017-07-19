@@ -66,16 +66,20 @@ export default class extends ReactBackdrop{
         });
       });
     }
+    return this;
   }
 
   hide(){
     const { onHidden } = this.props;
-    return new Promise((resolve,reject)=>{
-      super.hide().then(()=>{
-        resolve();
-        onHidden();
+    if(visible){
+      return new Promise((resolve,reject)=>{
+        super.hide().then(()=>{
+          resolve();
+          onHidden();
+        });
       });
-    });
+    }
+    return this;
   }
 
   _onClose = (inEvent) => {
