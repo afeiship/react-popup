@@ -10,20 +10,30 @@
 ```javascript
 
   static propTypes = {
-    className:PropTypes.string,
-    direction:PropTypes.string,
-    closeable:PropTypes.bool,
-    fullscreen:PropTypes.bool,
-    onCloseClick:PropTypes.func,
-    onDropClick:PropTypes.func,
+    className: PropTypes.string,
+    direction: PropTypes.string,
+    closeable: PropTypes.bool,
+    fullscreen: PropTypes.bool,
+    onShown: PropTypes.func,
+    onHidden: PropTypes.func,
+    onCloseClick: PropTypes.func,
+    onDropClick: PropTypes.func,
+    backdrop: PropTypes.bool,
+    backdropStyle: PropTypes.object
   };
 
   static defaultProps = {
     direction:'bottom',
     closeable:false,
     fullscreen:false,
+    onShown: noop,
+    onHidden: noop,
     onDropClick: noop,
     onCloseClick: noop,
+    backdrop: true,
+    backdropStyle:{
+      position:'fixed'
+    }
   };
   
 ```
@@ -84,7 +94,7 @@ class App extends React.Component{
   _click1(){
     // ReactPopupCtrl.show();
     // console.log(this.refs.cont);
-    this.refs.rnp.show(()=>{
+    this.refs.rnp.show().then(()=>{
       console.log('after show..')
     });
   }
@@ -94,12 +104,21 @@ class App extends React.Component{
     this.refs.rnp2.show();
   }
 
-  _rp_click(){
+  _rp_click =e =>{
     console.log('rp click!');
+    this.refs.rnp2.hide();
   }
 
   _dropclick = (e) =>{
-    console.log(e,1);
+    console.log('drop click.');
+  };
+
+  _onShown = e =>{
+    console.log('on shown.');
+  };
+
+  _onHidden = e =>{
+    console.log('on hidden.');
   };
 
   render(){
@@ -112,7 +131,13 @@ class App extends React.Component{
         <button style={{backgroundColor:'#f60'}}  onClick={this._click2.bind(this,'right')}>direction:-> : right </button>
         <button style={{backgroundColor:'#4cd964'}}  onClick={this._click3.bind(this)}>FullScreen</button>
 
-        <ReactPopup onDropClick={this._dropclick} onClick={this._rp_click} direction={this.state.direction} ref='rnp'>
+        <ReactPopup
+          onShown={this._onShown}
+          onHidden={this._onHidden}
+          onDropClick={this._dropclick}
+          onClick={this._rp_click}
+          direction={this.state.direction}
+          ref='rnp'>
             <Content2  />
         </ReactPopup>
 
@@ -131,8 +156,10 @@ class App extends React.Component{
 ```
 
 ## todos:
-+ [ ] remove Closeable property.
-+ [ ] optimize onDropClick to Promise.then model
++ [x] remove Closeable property. (remain)
++ [x] optimize onDropClick to Promise.then model
++ [x] onShow/onHide event (react-visible).
+
 
 ## resource:
 + http://ionicframework.com/docs/components/#full-buttons
