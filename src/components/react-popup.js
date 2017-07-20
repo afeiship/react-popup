@@ -5,7 +5,6 @@ import {ReactBackdrop} from 'react-backdrop';
 import classNames from 'classnames';
 import closeImg from './close.png';
 import noop from 'noop';
-
 export default class extends ReactBackdrop{
   /*===properties start===*/
   static propTypes = {
@@ -46,6 +45,10 @@ export default class extends ReactBackdrop{
     };
   }
 
+  get docBody(){
+    return document.body;
+  }
+
   get children(){
     const {direction,children,closeable} = this.props;
     let childList = [
@@ -63,6 +66,7 @@ export default class extends ReactBackdrop{
         super.show().then(()=>{
           resolve();
           onShown();
+          this.onVisibleChange(true);
         });
       });
     }
@@ -75,8 +79,14 @@ export default class extends ReactBackdrop{
       super.hide().then(()=>{
         resolve();
         onHidden();
+        this.onVisibleChange(false);
       });
     });
+  }
+
+  onVisibleChange(inValue){
+    const method = inValue ? 'add': 'remove';
+    this.docBody.classList[method]('react-popup-exist');
   }
 
   _onClose = (inEvent) => {
