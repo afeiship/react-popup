@@ -1,4 +1,4 @@
-#react-popup
+# react-popup
 > Popup component for react.
 
 ## size:
