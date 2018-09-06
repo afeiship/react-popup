@@ -1,73 +1,28 @@
-.react-popup{
-  position: fixed;
-  left: 0;
+@import "node_modules/webkit-sassui-backdrop/dist/webkit-sassui-backdrop.scss";
+@import "node_modules/webkit-sassui-popup/dist/webkit-sassui-popup.scss";
 
-  backface-visibility: hidden;
-  z-index: 3;
-  width: 100%;
-  color:#333;
-  transition: transform 0.3s,-webkit-transform 0.3s;
+$react-popup-options: (
+  popup-z-index: 100,
+  backdrop-z-index: 98
+) !default;
 
-  >.close{
-    border: none;
-    background: none;
-    width:100%;
-    padding:14px;
+.react-popup {
+  $popup-z-index: map-get(
+    $map: $react-popup-options,
+    $key: popup-z-index
+  );
+  $backdrop-z-index: map-get(
+    $map: $react-popup-options,
+    $key: backdrop-z-index
+  );
+
+  &,
+  &-backdrop {
+    position: fixed;
   }
 
-  //fullscreen:
-  &[data-fullscreen=true]{
-    height:100%;
+  z-index: $popup-z-index;
+  &-bakcdrop {
+    z-index: $backdrop-z-index;
   }
-
-  //popup from top:
-  &[data-direction=top]{
-    top: 0;
-    &[data-visible=false]{
-      transform: translateY(-100%);
-    }
-
-    &[data-visible=true]{
-      transform: translateY(0);
-    }
-  }
-
-  //popup from bottom:
-  &[data-direction=bottom]{
-    bottom:0;
-    &[data-visible=false]{
-      transform: translateY(100%);
-    }
-
-    &[data-visible=true]{
-      transform: translateY(0);
-    }
-  }
-
-
-  //popup from left:
-  &[data-direction=left]{
-    top: 0;
-    &[data-visible=false]{
-      transform: translateX(-100%);
-    }
-
-    &[data-visible=true]{
-      transform: translateX(0);
-    }
-  }
-
-
-  //popup from right:
-  &[data-direction=right]{
-    top: 0;
-    &[data-visible=false]{
-      transform: translateX(100%);
-    }
-
-    &[data-visible=true]{
-      transform: translateX(0);
-    }
-  }
-
 }

@@ -1,61 +1,48 @@
-*{margin: 0;padding:0;}
+*{margin: 0;padding:0;box-sizing: border-box;}
 ul,li{list-style: none;}
-html,body,#app,{
-  height:100%;
+button{
+  border: none;
+  background: no-clip;
+  &:focus{
+    outline: none;
+  }
 }
 
-.hello-react-popup{
-  height:100%;
-  color:#F00;
-  padding:100px 20px;
-  position: relative;
-  button{
-    width:100%;
-    display: block;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    color:#FFF;
-    padding:20px;
-    border: none;
+@import './components/style.scss';
 
+
+.hello-react-popup{
+  color:#F00;
+  padding:50px 20px;
+
+  .react-popup{
+    background: #fff;
+    padding: 20px;
+  }
+
+  .button{
+    border: none;
+    display: block;
+    width:100%;
+    padding-left: 14px;
+    padding-right: 14px;
+    font-size: 18px;
+    text-align: center;
+    text-decoration: none;
+    overflow: visible;
+    height: 42px;
+    border-radius: 5px;
+    color: #ffffff;
+    line-height: 42px;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    background: #04be02;
+    margin-bottom: 15px;
     &:active{
-      // background: darken(#3cc51f,10%);
+      background: #3cc51f;
     }
 
     &:focus{
       outline: none;
     }
   }
-
-
-}
-
-
-.react-popup{
-  .content{
-    background: #fff;
-    h1{
-      border-left: 5px solid #CCC;
-      padding-left: 10px;
-      margin-bottom: 20px;
-      font-size: 20px;
-    }
-
-    p{
-      margin-bottom: 10px;
-      line-height: 22px;
-    }
-    cite{
-      color:#999;
-      padding:10px;
-      display: block;
-    }
-    img{
-      width:100%;
-    }
-  }
-}
-
-.my-full-popup{
-  background: #fff;
 }

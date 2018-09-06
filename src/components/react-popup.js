@@ -1,155 +1,107 @@
-import './style.scss';
-
+import React, { Fragment, Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import {ReactBackdrop} from 'react-backdrop';
 import classNames from 'classnames';
-import closeImg from './close.png';
 import noop from 'noop';
-import NxDomEvent from 'next-dom-event';
 
-export default class extends ReactBackdrop{
+const OBJECT = 'object';
+const EMPTY_OBJECT = {};
+
+export default class extends React.Component {
   /*===properties start===*/
   static propTypes = {
     className: PropTypes.string,
-    direction: PropTypes.string,
-    closeable: PropTypes.bool,
-    fullscreen: PropTypes.bool,
-    onShown: PropTypes.func,
-    onHidden: PropTypes.func,
-    onCloseClick: PropTypes.func,
-    onDropClick: PropTypes.func,
-    backdrop: PropTypes.bool,
-    backdropStyle: PropTypes.object
+    value: PropTypes.bool,
+    onChange: PropTypes.func,
+    destroyable: PropTypes.bool,
+    backdrop: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.object
+    ])
   };
 
   static defaultProps = {
-    direction:'bottom',
-    closeable:false,
-    fullscreen:false,
-    onShown: noop,
-    onHidden: noop,
-    onDropClick: noop,
-    onCloseClick: noop,
+    className: '',
+    value: false,
+    onChange: noop,
     backdrop: true,
-    backdropStyle:{
-      position:'fixed'
-    }
+    destroyable: false
   };
   /*===properties end===*/
 
-  constructor(props){
-    super(props);
+  constructor(inProps) {
+    const { value, destroyable } = inProps;
+    super(inProps);
     this.state = {
-      direction:props.direction,
-      backdropStyle: props.backdropStyle,
-      visible:false,
-      hidden:true,
+      value,
+      hidden: !value,
+      destroyValue: true
     };
   }
 
-  get docBody(){
-    return document.body;
-  }
-
-  get children(){
-    const {direction,children,closeable} = this.props;
-    let childList = [
-      closeable && <button key="btn" onClick={this._onClose} className="close"><img width="40" src={closeImg} /></button>,
-      children
-    ];
-    return direction === 'bottom' ? childList : childList.reverse();
-  }
-
-
-  componentWillMount() {
-    this.attachEvents();
-  }
-
-  componentWillUnmount() {
-    this.detachEvents();
-  }
-
-  attachEvents(){
-    this._docMoveRes = NxDomEvent.on( document.body, 'touchmove', this._onDocMove, false);
-  }
-
-  detachEvents(){
-    this._docMoveRes.destroy();
-    this.hide();
-  }
-
-  _onDocMove = inEvent=> {
-    // tobe impl
-  };
-
-  show(){
-    const { onShown } = this.props;
-    const { visible } = this.state;
-    if(!visible){
-      return new Promise((resolve,reject)=>{
-        super.show().then(()=>{
-          resolve();
-          onShown();
-          this.onVisibleChange();
-        });
-      });
+  componentWillReceiveProps(inProps) {
+    const { value } = inProps;
+    if (value !== this.state.value) {
+      if (value) {
+        this.setState({ hidden: false })
+      }
+      this.setState({ value });
     }
-    return this;
   }
 
-  hide(){
-    const { onHidden } = this.props;
-    return new Promise((resolve,reject)=>{
-      super.hide().then(()=>{
-        resolve();
-        onHidden();
-        this.onVisibleChange();
-      });
+  present() {
+    this.setState({ destroyValue: true, hidden: false, value: true })
+  }
+
+  dismiss() {
+    this.setState({ value: false });
+  }
+
+  updateDestroyValue() {
+    const { destroyable } = this.props;
+    const { value } = this.state;
+    this.setState({
+      destroyValue: destroyable ? value : true
     });
   }
 
-  onVisibleChange(){
-    const method = this.state.visible ? 'add': 'remove';
-    this.docBody.classList[method]('react-popup-shown');
-  }
-
-  _onClose = (inEvent) => {
-    const { onCloseClick } = this.props;
-    return this.hide().then(()=>{
-      onCloseClick(inEvent);
-    });
+  _onAnimationEnd = () => {
+    const { value } = this.state;
+    if (!value) {
+      this.setState({ hidden: true });
+    }
+    this.updateDestroyValue();
+    this.props.onChange({ target: { value } });
   };
 
-  _onDropClick = (inEvent) => {
-    const { onDropClick } = this.props;
-    return this.hide().then(()=>{
-      onDropClick(inEvent);
-    });
-  };
-
-  render(){
-    const {
-      direction,children,className,visible,
-      closeable,fullscreen,
-      onShown,onHidden,onCloseClick,onDropClick,
-      backdrop, backdropStyle,
-      ...props
-    } = this.props;
+  render() {
+    const { className, destroyable, backdrop, backdropProps, ...props } = this.props;
+    const { value, hidden, destroyValue } = this.state;
+    const bakcdropProps = typeof backdrop === OBJECT ? backdrop : EMPTY_OBJECT;
 
     return (
-      <div className="react-popup-container">
+      destroyValue && <Fragment>
         <div
+          hidden={hidden}
+          data-direction='bottom'
+          data-visible={value}
+          onAnimationEnd={this._onAnimationEnd}
+          className={classNames('webkit-sassui-popup react-popup', className)}
           {...props}
-          data-visible={this.state.visible}
-          onTransitionEnd={this._onTransitionEnd}
-          hidden={this.state.hidden}
-          data-direction={direction}
-          data-fullscreen={fullscreen}
-          className={classNames('react-popup',className)}>
-          {this.children}
-        </div>
-        { backdrop && <ReactBackdrop style={backdropStyle} onClick={this._onDropClick} visible={this.state.visible} /> }
-      </div>
+        />
+
+        {
+          !!backdrop && (
+            <div
+              hidden={hidden}
+              data-visible={value}
+              className="webkit-sassui-backdrop react-popup-backdrop"
+              {...bakcdropProps}
+            />
+          )
+        }
+      </Fragment>
     );
   }
 }
+
