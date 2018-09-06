@@ -30,7 +30,7 @@ export default class extends React.Component {
   /*===properties end===*/
 
   constructor(inProps) {
-    const { value, destroyable } = inProps;
+    const { value } = inProps;
     super(inProps);
     this.state = {
       value,
@@ -75,16 +75,16 @@ export default class extends React.Component {
   };
 
   render() {
-    const { className, destroyable, backdrop, backdropProps, ...props } = this.props;
-    const { value, hidden, destroyValue } = this.state;
+    const { className, destroyable, value, backdrop, backdropProps, ...props } = this.props;
+    const { hidden, destroyValue } = this.state;
+    const _value = this.state.value;
     const bakcdropProps = typeof backdrop === OBJECT ? backdrop : EMPTY_OBJECT;
 
     return (
       destroyValue && <Fragment>
         <div
           hidden={hidden}
-          data-direction='bottom'
-          data-visible={value}
+          data-visible={_value}
           onAnimationEnd={this._onAnimationEnd}
           className={classNames('webkit-sassui-popup react-popup', className)}
           {...props}
@@ -94,7 +94,7 @@ export default class extends React.Component {
           !!backdrop && (
             <div
               hidden={hidden}
-              data-visible={value}
+              data-visible={_value}
               className="webkit-sassui-backdrop react-popup-backdrop"
               {...bakcdropProps}
             />
