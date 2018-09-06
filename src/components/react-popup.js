@@ -39,15 +39,15 @@ export default class extends React.Component {
     };
   }
 
-  componentWillReceiveProps(inProps) {
-    const { value } = inProps;
-    if (value !== this.state.value) {
-      if (value) {
-        this.setState({ hidden: false })
-      }
-      this.setState({ value });
-    }
-  }
+  // componentWillReceiveProps(inProps) {
+  //   const { value } = inProps;
+  //   if (value !== this.state.value) {
+  //     if (value) {
+  //       this.setState({ hidden: false })
+  //     }
+  //     this.setState({ value });
+  //   }
+  // }
 
   present() {
     this.setState({ destroyValue: true, hidden: false, value: true })

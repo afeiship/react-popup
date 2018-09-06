@@ -6,28 +6,36 @@ import ReactPopup from './main';
 // install: npm install afeiship/react-popup --save
 // import : import ReactPopup from 'react-popup'
 
-class App extends React.Component{
+class App extends React.Component {
   state = {
     value: false
   };
 
-  constructor(props){
+  constructor(props) {
     super(props);
     window.demo = this;
     window.refs = this.refs;
     window.rc = this.refs.rc;
   }
 
-  _onClick1 = () =>{
+  _onClick1 = () => {
     this.rc.present();
   };
-  _onClick2 = () =>{};
+  _onClick2 = () => { };
 
-  render(){
+  _onDropClick = () => {
+    this.rc.dismiss();
+  };
+
+  _onChange = inEvent => {
+    console.log(inEvent.target.value);
+  };
+
+  render() {
     return (
       <div className="hello-react-popup">
         <button onClick={this._onClick1} className="button">SHOW</button>
-        <ReactPopup ref={rc=>this.rc =rc} >
+        <ReactPopup onChange={this._onChange} ref={rc => this.rc = rc} backdrop={{ onClick: this._onDropClick }} >
           <p>POPUP CONTENT</p>
           <p>POPUP CONTENT</p>
           <p>POPUP CONTENT</p>
@@ -40,6 +48,6 @@ class App extends React.Component{
 /*===example end===*/
 
 ReactDOM.render(
-    <App />,
-    document.getElementById('app')
+  <App />,
+  document.getElementById('app')
 );
