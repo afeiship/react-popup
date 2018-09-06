@@ -10,15 +10,24 @@ button{
 
 @import './components/style.scss';
 
+.tc{
+  text-align: center;
+}
+
+.bg-f{
+  background: #fff;
+}
+
+.p20{
+  padding:20px;
+}
+.blank{
+  height: 10px;
+}
 
 .hello-react-popup{
   color:#F00;
   padding:50px 20px;
-
-  .react-popup{
-    background: #fff;
-    padding: 20px;
-  }
 
   .button{
     border: none;

@@ -36,10 +36,17 @@ class App extends React.Component {
       <div className="hello-react-popup">
         <button onClick={this._onClick1} className="button">SHOW</button>
         <ReactPopup onChange={this._onChange} ref={rc => this.rc = rc} backdrop={{ onClick: this._onDropClick }} >
-          <p>POPUP CONTENT</p>
-          <p>POPUP CONTENT</p>
-          <p>POPUP CONTENT</p>
-          <p>POPUP CONTENT</p>
+          <p className="tc" onClick={this._onDropClick}>
+            <img width="40" src="https://i.stack.imgur.com/mo4WJ.png" alt="" />
+          </p>
+          <div className="blank"/>
+          <div className="p20 bg-f">
+            <p>POPUP CONTENT</p>
+            <p>POPUP CONTENT</p>
+            <p>POPUP CONTENT</p>
+            <p>POPUP CONTENT</p>
+            <button className="button" onClick={this._onDropClick}>Hide</button>
+          </div>
         </ReactPopup>
       </div>
     );
