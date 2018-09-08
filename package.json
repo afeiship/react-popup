@@ -90,6 +90,7 @@
     "noop": "github:afeiship/noop",
     "object-assign": "^4.1.1",
     "prop-types": "^15.5.10",
+    "react-visible": "github:afeiship/react-visible",
     "webkit-sassui-backdrop": "github:afeiship/webkit-sassui-backdrop",
     "webkit-sassui-popup": "github:afeiship/webkit-sassui-popup"
   }
